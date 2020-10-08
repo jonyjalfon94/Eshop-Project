@@ -8,6 +8,6 @@ azs = ["us-east-1a", "us-east-1b"]
 
 webservers_ami = "ami-0ff8a91507f77f867"
 
-instance_type = "t2.nano"
+instance_type = "t2.micro"
 
 backend_bucket_name = "eshop-backend-bucket"
