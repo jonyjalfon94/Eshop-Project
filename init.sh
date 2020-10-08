@@ -14,7 +14,7 @@ docker-compose --version
 
 # Install git
 
-sudo yum install git -yum
+sudo yum install git -y
 sudo yum update -y
 
 # Clone repository
@@ -22,4 +22,4 @@ sudo yum update -y
 git clone https://github.com/jonyjalfon94/eShopOnWeb.git
 cd eShopOnWeb
 docker-compose build
-docker-compose up
+docker-compose up -d
