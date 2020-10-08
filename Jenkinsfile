@@ -10,7 +10,7 @@ try {
   }
 
   stage('Change working dir') {
-    steps {
+    node {
       dir('eshop-infra') {
         sh "pwd"
       }
