@@ -120,7 +120,7 @@ resource "aws_instance" "webservers" {
   security_groups = [aws_security_group.webservers.id]
   subnet_id       = element(aws_subnet.public.*.id, count.index)
   key_name = "eshop-key"
-  user_data = "${file("init.sh")}"
+  user_data = file("./init.sh")
 
   tags = {
     Name = "Server-${count.index}"
