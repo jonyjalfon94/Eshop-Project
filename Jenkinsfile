@@ -8,17 +8,10 @@ try {
       checkout scm
     }
   }
-
-  stage('Change working dir') {
-    node {
-      dir('eshop-infra') {
-        sh "pwd"
-      }
-    }
-  }
   // Run terraform init
   stage('init') {
     node {
+      sh 'cd eshop-infra'
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
         credentialsId: credentialsId,
@@ -35,6 +28,7 @@ try {
   // Run terraform plan
   stage('plan') {
     node {
+      sh 'cd eshop-infra'
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
         credentialsId: credentialsId,
@@ -53,6 +47,7 @@ try {
     // Run terraform apply
     stage('apply') {
       node {
+        sh 'cd eshop-infra'
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
           credentialsId: credentialsId,
@@ -69,6 +64,7 @@ try {
     // Run terraform show
     stage('show') {
       node {
+        sh 'cd eshop-infra'
         withCredentials([[
           $class: 'AmazonWebServicesCredentialsBinding',
           credentialsId: credentialsId,
