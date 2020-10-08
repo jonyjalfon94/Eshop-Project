@@ -23,5 +23,5 @@ sudo yum update -y
 
 git clone https://github.com/jonyjalfon94/eShopOnWeb.git
 cd eShopOnWeb
-docker-compose build
-docker-compose up -d
+sudo docker-compose build
+sudo docker-compose up -d
