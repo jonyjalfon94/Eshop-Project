@@ -11,10 +11,6 @@ try {
   // Run terraform init
   stage('init') {
     node {
-      dir("eshop-infra") {
-        sh "pwd"
-      }
-      sh 'cd eshop-infra'
       withCredentials([[
         $class: 'AmazonWebServicesCredentialsBinding',
         credentialsId: credentialsId,
