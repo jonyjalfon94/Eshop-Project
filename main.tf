@@ -99,6 +99,9 @@ resource "aws_elb" "eshop-elb" {
     interval            = 30
   }
 
+  access_logs = {
+    bucket = "eshop-backend-bucket1"
+  }
   instances                   = aws_instance.webservers.*.id
   cross_zone_load_balancing   = true
   idle_timeout                = 100
