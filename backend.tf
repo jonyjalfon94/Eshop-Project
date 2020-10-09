@@ -7,7 +7,7 @@ terraform {
   required_version = ">= 0.13"
   
   backend "s3" {
-    bucket = "eshop-backend-bucket"
+    bucket = "eshop-backend-bucket1"
     key    = "terraform.tfstate"
     region = "us-east-1"
   }
