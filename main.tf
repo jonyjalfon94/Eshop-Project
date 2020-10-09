@@ -61,6 +61,13 @@ resource "aws_security_group" "webservers" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+    ingress {
+    from_port   = 5200
+    to_port     = 5200
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     from_port   = 22
     to_port     = 22
@@ -91,6 +98,13 @@ resource "aws_elb" "eshop-elb" {
     lb_protocol       = "http"
   }
 
+    listener {
+    instance_port     = 5200
+    instance_protocol = "http"
+    lb_port           = 5200
+    lb_protocol       = "http"
+  }
+
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
@@ -102,6 +116,7 @@ resource "aws_elb" "eshop-elb" {
   access_logs = {
     bucket = "eshop-backend-bucket1"
   }
+
   instances                   = aws_instance.webservers.*.id
   cross_zone_load_balancing   = true
   idle_timeout                = 100
@@ -128,7 +143,6 @@ resource "aws_instance" "webservers" {
     Name = "Server-${count.index}"
   }
 }
-
 
 output "elb-dns-name" {
   value = aws_elb.eshop-elb.dns_name
