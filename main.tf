@@ -62,13 +62,6 @@ resource "aws_security_group" "webservers" {
   }
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -88,14 +81,14 @@ resource "aws_security_group" "webservers" {
 # Create a new load balancer
 resource "aws_elb" "eshop-elb" {
   name = "eshop-elb"
-  #availability_zones = ["${var.azs}"]
+  availability_zones = [var.azs]
   subnets         = aws_subnet.public.*.id
   security_groups = [aws_security_group.webservers.id]
 
   listener {
     instance_port     = 5106
     instance_protocol = "http"
-    lb_port           = 80
+    lb_port           = 5106
     lb_protocol       = "http"
   }
 
