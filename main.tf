@@ -89,7 +89,7 @@ resource "aws_security_group" "webservers" {
 resource "aws_elb" "eshop-elb" {
   name = "eshop-elb"
   subnets         = aws_subnet.public.*.id
-  security_groups = [aws_security_group.webservers.id]
+  vpc_id = aws_vpc.eshop_vpc.id
 
   listener {
     instance_port     = 5106
@@ -130,7 +130,7 @@ resource "aws_instance" "webservers" {
   count           = length(var.subnets_cidr)
   ami             = var.webservers_ami
   instance_type   = var.instance_type
-  security_groups = [aws_security_group.webservers.id]
+  vpc_id = aws_vpc.eshop_vpc.id
   subnet_id       = element(aws_subnet.public.*.id, count.index)
   key_name = "eshop-key"
   user_data = file("./init.sh")
