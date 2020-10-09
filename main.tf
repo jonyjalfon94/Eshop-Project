@@ -113,7 +113,7 @@ resource "aws_elb" "eshop-elb" {
     interval            = 30
   }
 
-  access_logs = {
+  access_logs {
     bucket = "eshop-backend-bucket1"
   }
 
