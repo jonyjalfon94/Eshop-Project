@@ -81,7 +81,6 @@ resource "aws_security_group" "webservers" {
 # Create a new load balancer
 resource "aws_elb" "eshop-elb" {
   name = "eshop-elb"
-  availability_zones = [var.azs]
   subnets         = aws_subnet.public.*.id
   security_groups = [aws_security_group.webservers.id]
 
