@@ -1,8 +1,8 @@
-# VPC
+
 resource "aws_vpc" "eshop_vpc" {
-  cidr_block = var.vpc_cidr
+  cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
   tags = {
     Name = "EshopVPC"
   }
@@ -61,7 +61,7 @@ resource "aws_security_group" "webservers" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-    ingress {
+  ingress {
     from_port   = 5200
     to_port     = 5200
     protocol    = "tcp"
@@ -81,65 +81,4 @@ resource "aws_security_group" "webservers" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-#--------ELB------------
-
-# Create a new load balancer
-resource "aws_elb" "eshop-elb" {
-  name = "eshop-elb"
-  subnets         = aws_subnet.public.*.id
-  vpc_id = aws_vpc.eshop_vpc.id
-
-  listener {
-    instance_port     = 5106
-    instance_protocol = "http"
-    lb_port           = 5106
-    lb_protocol       = "http"
-  }
-
-    listener {
-    instance_port     = 5200
-    instance_protocol = "http"
-    lb_port           = 5200
-    lb_protocol       = "http"
-  }
-
-  health_check {
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 3
-    target              = "HTTP:5106/"
-    interval            = 30
-  }
-
-  instances                   = aws_instance.webservers.*.id
-  cross_zone_load_balancing   = true
-  idle_timeout                = 100
-  connection_draining         = true
-  connection_draining_timeout = 300
-
-  tags = {
-    Name = "eshopform-elb"
-  }
-}
-
-#--------Instances-----------
-
-resource "aws_instance" "webservers" {
-  count           = length(var.subnets_cidr)
-  ami             = var.webservers_ami
-  instance_type   = var.instance_type
-  vpc_id = aws_vpc.eshop_vpc.id
-  subnet_id       = element(aws_subnet.public.*.id, count.index)
-  key_name = "eshop-key"
-  user_data = file("./init.sh")
-
-  tags = {
-    Name = "Server-${count.index}"
-  }
-}
-
-output "elb-dns-name" {
-  value = aws_elb.eshop-elb.dns_name
 }

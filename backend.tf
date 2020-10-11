@@ -5,7 +5,7 @@ terraform {
     }
   }
   required_version = ">= 0.13"
-  
+
   backend "s3" {
     bucket = "eshop-backend-bucket"
     key    = "terraform.tfstate"
