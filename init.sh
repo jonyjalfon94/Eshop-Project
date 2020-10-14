@@ -18,7 +18,7 @@ echo"-------Get docker-compose.yml and docker-compose.override.yml-------"
 
 mkdir eshopDeploy
 cd eshopDeploy
-wget https://raw.githubusercontent.com/jonyjalfon94/eShopOnWeb/master/docker-compose.yml
+wget https://raw.githubusercontent.com/jonyjalfon94/eshop-infrastructure/master/docker-compose.yml
 wget https://raw.githubusercontent.com/jonyjalfon94/eShopOnWeb/master/docker-compose.override.yml
 
 echo"-------Run containers-------"

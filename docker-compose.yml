@@ -1,0 +1,7 @@
+version: '3.4'
+
+services:
+  eshopwebmvc:
+    image: jonyjalfon94/eshop-web:latest
+  eshoppublicapi:
+    image: jonyjalfon94/eshop-api:latest
